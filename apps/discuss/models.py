@@ -1,9 +1,10 @@
 from django.db import models
+from django.template.defaultfilters import slugify
 from apps.users.models import User
 
 
 class TimeStampModel(models.Model):
-    user = models.ForeignKey(User, db_index=True)
+    user = models.ForeignKey(User, db_index=True, null=True, blank=True)
     description = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
