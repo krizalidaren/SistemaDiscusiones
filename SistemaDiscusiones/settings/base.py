@@ -1,3 +1,4 @@
+from django.conf.global_settings import EMAIL_BACKEND
 from unipath import Path
 BASE_DIR = Path(__file__).ancestor(3)
 
@@ -17,11 +18,13 @@ THIRD_PARTY_APPS = (
     'oauthlib',
     'social',
     'social.apps.django_app.default',
+    'djrill',
 )
 
 LOCAL_APPS = (
     'apps.home',
     'apps.users',
+    'apps.discuss',
 )
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -79,4 +82,12 @@ SOCIAL_AUTH_PIPELINE = (
     'social.pipeline.social_auth.load_extra_data',
     'social.pipeline.user.user_details',
     'apps.users.pipelines.get_avatar',
+)
+
+EMAIL_BACKEND = "djrill.mail.backends.djrill.DjrillBackend"
+
+from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
+
+TCP = TCP + (
+    'social.apps.django_app.context_processors.backends',
 )
